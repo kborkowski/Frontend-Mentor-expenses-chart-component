@@ -1,0 +1,69 @@
+{
+  "name": "ExpensesChartApp",
+  "displayName": "Expenses Chart",
+  "version": "1.0.0",
+  "description": "A visual expenses chart component that displays weekly spending data from SharePoint",
+  "author": "Krzysztof Borkowski",
+  "type": "codeComponent",
+  "properties": {
+    "balance": {
+      "type": "number",
+      "displayName": "Balance Amount",
+      "description": "Current account balance",
+      "default": 921.48
+    },
+    "monthTotal": {
+      "type": "number",
+      "displayName": "Month Total",
+      "description": "Total expenses for the month",
+      "default": 478.33
+    },
+    "monthChange": {
+      "type": "number",
+      "displayName": "Month Change %",
+      "description": "Percentage change from last month",
+      "default": 2.4
+    }
+  },
+  "dataSources": {
+    "expensesData": {
+      "displayName": "Expenses Data",
+      "description": "SharePoint list containing daily expense data",
+      "type": "collection",
+      "fields": [
+        {
+          "name": "Title",
+          "type": "string",
+          "displayName": "Day",
+          "required": true
+        },
+        {
+          "name": "Amount",
+          "type": "number",
+          "displayName": "Amount",
+          "required": true
+        },
+        {
+          "name": "IsCurrentDay",
+          "type": "boolean",
+          "displayName": "Is Current Day",
+          "required": false
+        }
+      ]
+    }
+  },
+  "files": {
+    "main": "index.html",
+    "scripts": ["app.js"],
+    "styles": ["style.css"],
+    "assets": ["images/"]
+  },
+  "dimensions": {
+    "width": 540,
+    "height": 600,
+    "responsive": true
+  },
+  "requiredFeatures": [
+    "SharePointConnector"
+  ]
+}
