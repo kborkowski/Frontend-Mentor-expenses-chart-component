@@ -1,34 +1,82 @@
 import { useState, useEffect } from 'react'
 import './ExpensesChart.css'
+import { getWeeklyExpenses, ExpenseData } from './services/expensesApiService'
 
-interface ExpenseData {
-  day: string
-  amount: number
-  isCurrentDay: boolean
+interface ExpensesState {
+  expensesData: ExpenseData[];
+  maxAmount: number;
+  balance: number;
+  monthTotal: number;
+  monthChange: number;
 }
 
 function ExpensesChart() {
-  const [expensesData, setExpensesData] = useState<ExpenseData[]>([
-    { day: 'mon', amount: 17.45, isCurrentDay: false },
-    { day: 'tue', amount: 34.91, isCurrentDay: false },
-    { day: 'wed', amount: 52.36, isCurrentDay: true },
-    { day: 'thu', amount: 31.07, isCurrentDay: false },
-    { day: 'fri', amount: 23.39, isCurrentDay: false },
-    { day: 'sat', amount: 43.28, isCurrentDay: false },
-    { day: 'sun', amount: 25.48, isCurrentDay: false },
-  ])
-
-  const [balance] = useState(921.48)
-  const [monthTotal] = useState(478.33)
-  const [monthChange] = useState(2.4)
+  const [data, setData] = useState<ExpensesState>({
+    expensesData: [],
+    maxAmount: 0,
+    balance: 0,
+    monthTotal: 0,
+    monthChange: 0
+  })
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // TODO: Load data from Power Apps / SharePoint when available
-    // For now, using default data
-    console.log('ExpensesChart loaded')
+    const loadExpensesData = async () => {
+      try {
+        setIsLoading(true)
+        setError(null)
+        
+        const result = await getWeeklyExpenses()
+        setData({
+          expensesData: result.expensesData,
+          maxAmount: result.maxAmount,
+          balance: result.balance,
+          monthTotal: result.monthTotal,
+          monthChange: result.monthChange
+        })
+      } catch (err) {
+        console.error('Error loading expenses data:', err)
+        setError('Failed to load expenses data')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadExpensesData()
   }, [])
 
-  const maxAmount = Math.max(...expensesData.map((d) => d.amount))
+  const { expensesData, maxAmount, balance, monthTotal, monthChange } = data
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <article className="expenses flow">
+        <div className="expenses__main flow">
+          <div className="loading-message">Loading expenses data...</div>
+        </div>
+      </article>
+    )
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <article className="expenses flow">
+        <div className="expenses__main flow">
+          <div className="error-message">
+            {error}
+            <button 
+              onClick={() => window.location.reload()}
+              className="retry-button"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </article>
+    )
+  }
 
   return (
     <article className="expenses flow">
@@ -40,7 +88,7 @@ function ExpensesChart() {
             <data value={balance}>${balance.toFixed(2)}</data>
           </p>
         </div>
-        <img src="/logo.svg" alt="" />
+        <img src="./logo.svg" alt="" />
       </div>
 
       {/* Main Content */}
@@ -59,7 +107,7 @@ function ExpensesChart() {
                     '--max': maxAmount,
                   } as React.CSSProperties
                 }
-                {...(item.isCurrentDay && { 'data-current-day': '' })}
+                {...(item.isMaxAmount && { 'data-max-amount': '' })}
               >
                 <meter
                   data-vertical=""
@@ -88,7 +136,7 @@ function ExpensesChart() {
           </p>
           <p className="expenses__month-prev">
             <strong>
-              <data value={monthChange}>+{monthChange.toFixed(1)}%</data>
+              <data value={monthChange}>{monthChange >= 0 ? '+' : ''}{monthChange.toFixed(1)}%</data>
             </strong>
             <span>from last month</span>
           </p>

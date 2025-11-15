@@ -1,32 +1,116 @@
-# Frontend Mentor - Expenses chart component
+# Expenses Chart Component - Power Apps Code App
 
-![Design preview for the Expenses chart component coding challenge](preview.jpg)
+A weekly expenses visualization component built with React + TypeScript for Power Apps Code Apps. Features dynamic date detection and Power Automate integration.
 
-## Welcome! 👋
+## Features
 
-Thanks for checking out this front-end coding challenge.
+- **Dynamic Current Day Highlighting**: Automatically highlights the current day's bar in orange
+- **Power Automate Integration**: Fetches real-time expense data from Power Automate flows
+- **Mock Data Fallback**: Gracefully falls back to mock data when offline or in development
+- **Responsive Design**: Optimized for various screen sizes
+- **Interactive Hover States**: Displays exact amounts on bar hover
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+## Tech Stack
 
-**To do this challenge, you need a decent understanding of HTML, CSS and JavaScript.**
+- React 18 + TypeScript
+- Vite 6
+- Power Apps Code Apps
+- Power Automate (optional integration)
 
-## The challenge
+## Setup
 
-Your challenge is to build out this bar chart component and get it looking as close to the design as possible.
+### Prerequisites
 
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+- Node.js 18 or higher
+- Power Platform CLI (`pac`) version 1.50+
+- Power Apps environment
 
-We provide the data for the chart in a local `data.json` file. So you can use that to dynamically add the bars if you choose.
+### Installation
 
-Your users should be able to:
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd Frontend-Mentor-expenses-chart-component
+```
 
-- View the bar chart and hover over the individual bars to see the correct amounts for each day
-- See the current day's bar highlighted in a different colour to the other bars
-- View the optimal layout for the content depending on their device's screen size
-- See hover states for all interactive elements on the page
-- **Bonus**: See dynamically generated bars based on the data provided in the local JSON file
+2. Install dependencies:
+```bash
+npm install
+```
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+3. Configure environment variables:
+   - Copy `.env.example` to `.env`
+   - Add your Power Automate flow URL to `VITE_FLOW_URL`
+
+4. Configure Power Apps settings:
+   - Copy `power.config.json.example` (if provided) or create `power.config.json`
+   - Update `appId` and `environmentId` with your Power Apps details
+
+### Development
+
+Run locally:
+```bash
+npm run dev
+```
+
+### Deployment to Power Apps
+
+Build and push to Power Apps:
+```bash
+npm run build
+pac code push
+```
+
+## Power Automate Setup (Optional)
+
+To integrate with live data, create a Power Automate flow:
+
+1. Create an HTTP Request trigger (GET method)
+2. Configure the response with this schema:
+```json
+{
+  "expensesData": [
+    {"day": "mon", "amount": 17.45},
+    {"day": "tue", "amount": 34.91},
+    {"day": "wed", "amount": 52.36},
+    {"day": "thu", "amount": 31.07},
+    {"day": "fri", "amount": 23.39},
+    {"day": "sat", "amount": 43.28},
+    {"day": "sun", "amount": 25.48}
+  ],
+  "balanceAmount": 921.48,
+  "monthTotal": 478.33,
+  "monthChange": 2.4
+}
+```
+3. Set authentication to "Anyone" for direct browser access
+4. Copy the flow URL to your `.env` file
+
+## Project Structure
+
+```
+src/
+├── components/
+│   └── ExpensesChart.tsx    # Main chart component
+├── services/
+│   └── expensesApiService.ts # API service with Power Automate integration
+├── App.tsx                   # Root component
+└── main.tsx                  # Entry point
+```
+
+## Environment Variables
+
+- `VITE_FLOW_URL`: Power Automate flow URL for fetching expense data
+
+## Security Notes
+
+- Never commit `power.config.json` or `.env` files (already in `.gitignore`)
+- Flow URLs with `sig` parameters contain authentication tokens
+- Use environment variables for all sensitive data
+
+## License
+
+This project is based on a [Frontend Mentor](https://www.frontendmentor.io) challenge.
 
 ## Where to find everything
 

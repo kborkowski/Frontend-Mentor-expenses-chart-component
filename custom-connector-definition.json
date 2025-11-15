@@ -1,0 +1,113 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Expenses Data Connector",
+    "description": "Custom connector for retrieving weekly expenses data from Power Automate flow",
+    "version": "1.0.0"
+  },
+  "host": "prod-XX.eastus.logic.azure.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/workflows/YOUR-WORKFLOW-ID/triggers/manual/paths/invoke": {
+      "get": {
+        "summary": "Get Weekly Expenses",
+        "description": "Retrieves the last 7 days of expense data including balance and monthly totals",
+        "operationId": "GetWeeklyExpenses",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "2016-06-01",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "sp",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-ms-visibility": "internal",
+            "description": "SAS token from Power Automate flow"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "day": {
+                        "type": "string",
+                        "description": "Day of week (mon, tue, wed, etc.)"
+                      },
+                      "amount": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Expense amount in dollars"
+                      }
+                    }
+                  },
+                  "description": "Array of daily expense data"
+                },
+                "balance": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Current account balance"
+                },
+                "monthTotal": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Total expenses for the month"
+                },
+                "monthChange": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Percentage change from last month"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {
+    "oauth2_auth": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+      "tokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      "scopes": {
+        "openid": "Sign in",
+        "profile": "Read user profile",
+        "email": "Read user email",
+        "User.Read": "Read user information"
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2_auth": [
+        "openid",
+        "profile",
+        "email",
+        "User.Read"
+      ]
+    }
+  ],
+  "tags": []
+}

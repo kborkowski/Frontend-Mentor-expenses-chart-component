@@ -1,0 +1,12 @@
+{
+  "appId": "YOUR_APP_ID",
+  "appDisplayName": "Expenses Chart Component",
+  "description": "Weekly expenses visualization with Power Automate integration",
+  "environmentId": "YOUR_ENVIRONMENT_ID",
+  "buildPath": "dist",
+  "buildEntryPoint": "index.html",
+  "logoPath": "Default",
+  "localAppUrl": "http://localhost:3000/",
+  "connectionReferences": {},
+  "databaseReferences": {}
+}
