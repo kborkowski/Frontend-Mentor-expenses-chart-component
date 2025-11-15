@@ -1,120 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- displays site properly based on user's device -->
-
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./images/favicon-32x32.png"
-    />
-
-    <title>Frontend Mentor | Expenses chart component</title>
-
+    <title>Expenses Chart | Power Apps Code App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
-    <script src="app.js" defer></script>
   </head>
   <body>
-    <main class="challenge-wrapper">
-      <article class="expenses flow">
-        <div class="expenses__balance repel">
-          <div class="flow">
-            <h2>My balance</h2>
-            <p>
-              <data value="921.48">$921.48</data>
-            </p>
-          </div>
-          <img src="./images/logo.svg" alt="" />
-        </div>
-        <div class="expenses__main flow">
-          <div class="expenses__week flow">
-            <h2>Spending - Last 7 days</h2>
-            <div class="meters">
-              <div class="meter" style="--value: 17.45; --max: 52.36">
-                <meter data-vertical id="mon" max="52.36" value="17.45">
-                  $17.45
-                </meter>
-                <label for="mon">Mon <span>$17.45</span></label>
-              </div>
-              <div class="meter" style="--value: 34.91; --max: 52.36">
-                <meter data-vertical id="tue" max="52.36" value="34.91">
-                  $34.91
-                </meter>
-                <label for="tue">Tue <span>$34.91</span></label>
-              </div>
-              <div
-                class="meter"
-                style="--value: 52.36; --max: 52.36"
-                data-current-day
-              >
-                <meter data-vertical id="wed" max="52.36" value="52.36">
-                  $52.36
-                </meter>
-                <label for="wed">Wed <span>$52.36</span></label>
-              </div>
-              <div class="meter" style="--value: 31.07; --max: 52.36">
-                <meter data-vertical id="thu" max="52.36" value="31.07">
-                  $31.07
-                </meter>
-                <label for="thu">Thu <span>$31.07</span></label>
-              </div>
-              <div class="meter" style="--value: 23.39; --max: 52.36">
-                <meter data-vertical id="fri" max="52.36" value="23.39">
-                  $23.39
-                </meter>
-                <label for="fri">Fri <span>$23.39</span></label>
-              </div>
-              <div class="meter" style="--value: 43.28; --max: 52.36">
-                <meter data-vertical id="sat" max="52.36" value="43.28">
-                  $43.28
-                </meter>
-                <label for="sat">Sat <span>$43.28</span></label>
-              </div>
-              <div class="meter" style="--value: 25.48; --max: 52.36">
-                <meter data-vertical id="sun" max="52.36" value="25.48">
-                  $25.48
-                </meter>
-                <label for="sun">Sun <span>$25.48</span></label>
-              </div>
-            </div>
-            <!--
-          mon
-          tue
-          wed
-          thu
-          fri
-          sat
-          sun
-          --></div>
-          <hr />
-          <div class="expenses__month repel">
-            <h2 data-fullwidth>Total this month</h2>
-            <p class="expenses__month-total">
-              <data value="478.33">$478.33</data>
-            </p>
-            <p class="expenses__month-prev">
-              <strong>
-                <data value="2.4">+2.4%</data>
-              </strong>
-              <span>from last month</span>
-            </p>
-          </div>
-        </div>
-      </article>
-    </main>
-
-    <!-- <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div> -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
